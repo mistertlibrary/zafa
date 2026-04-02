@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -18,254 +17,222 @@
     --muted: #9a9a9a;
 }
 
-- { box-sizing: border-box; }
+* { box-sizing: border-box; }
 
 body {
-margin: 0;
-padding: 20px;
-background: var(–bg);
-font-family: ‘Share Tech Mono’, monospace;
-color: var(–text);
-overflow-x: hidden;
+    margin: 0;
+    padding: 20px;
+    background: var(--bg);
+    font-family: 'Share Tech Mono', monospace;
+    color: var(--text);
+    overflow-x: hidden;
 }
 
 /* Scanline effect */
 body::before {
-content: ‘’;
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: repeating-linear-gradient(
-0deg,
-rgba(0, 0, 0, 0.15),
-rgba(0, 0, 0, 0.15) 1px,
-transparent 1px,
-transparent 2px
-);
-pointer-events: none;
-z-index: 9999;
-opacity: 0.3;
-}
-
-/* Print Stylesheet */
-@media print {
-body::before { display: none; }
-body { background: white; color: black; padding: 0; }
-#landing, .sound-toggle, .open-log-btn, .research-log, .nav-rack, .progress-dots { display: none !important; }
-#main-interface { display: block !important; }
-#fuku-jigsaw { border: none; box-shadow: none; background: white; }
-.main-terminal {
-height: auto;
-max-height: none;
-overflow: visible;
-background: white;
-border: none;
-page-break-inside: avoid;
-}
-.header-title { color: black; }
-.lore-tag, .fn-num, .fn-anchor { color: black; }
-.intel-strip { border-left-color: black; background: #f5f5f5; }
-.zafa-protocol-box { border-color: black; background: #f5f5f5; }
-.archival-link { color: black; border-bottom: 1px solid black; }
-.source-index { color: black; }
-a[href]:after { content: “ (” attr(href) “)”; font-size: 0.8em; }
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.3;
 }
 
 /* Landing Page */
 #landing {
-min-height: 100vh;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-text-align: center;
-padding: 40px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px;
 }
 
 .glitch-title {
-font-family: ‘Press Start 2P’;
-color: var(–fuku-red);
-font-size: 24px;
-letter-spacing: 3px;
-line-height: 1.6;
-margin-bottom: 30px;
-animation: glitchAnim 2s ease-in-out;
+    font-family: 'Press Start 2P';
+    color: var(--fuku-red);
+    font-size: 24px;
+    letter-spacing: 3px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    animation: glitchAnim 2s ease-in-out;
 }
 
 @keyframes glitchAnim {
-0%, 100% { transform: translate(0); }
-10% { transform: translate(-2px, 2px); color: var(–zafa-green); }
-20% { transform: translate(2px, -2px); }
-30% { transform: translate(-2px, -2px); color: var(–mana-blue); }
-40% { transform: translate(2px, 2px); }
-50% { transform: translate(-2px, 2px); color: var(–fuku-red); }
-60% { transform: translate(2px, -2px); }
+    0%, 100% { transform: translate(0); }
+    10% { transform: translate(-2px, 2px); color: var(--zafa-green); }
+    20% { transform: translate(2px, -2px); }
+    30% { transform: translate(-2px, -2px); color: var(--mana-blue); }
+    40% { transform: translate(2px, 2px); }
+    50% { transform: translate(-2px, 2px); color: var(--fuku-red); }
+    60% { transform: translate(2px, -2px); }
 }
 
 .system-status {
-font-family: ‘Press Start 2P’;
-font-size: 10px;
-color: var(–mana-blue);
-margin-bottom: 40px;
+    font-family: 'Press Start 2P';
+    font-size: 10px;
+    color: var(--mana-blue);
+    margin-bottom: 40px;
 }
 
 .mission-briefing {
-max-width: 900px;
-background: rgba(0, 8, 16, 0.9);
-border: 2px solid #333;
-padding: 40px;
-margin: 30px auto;
-line-height: 1.9;
-font-size: 17px;
-text-align: left;
+    max-width: 900px;
+    background: rgba(0, 8, 16, 0.9);
+    border: 2px solid #333;
+    padding: 40px;
+    margin: 30px auto;
+    line-height: 1.9;
+    font-size: 17px;
+    text-align: left;
 }
 
 .mission-briefing h2 {
-font-family: ‘Press Start 2P’;
-font-size: 14px;
-color: var(–zafa-green);
-margin-top: 0;
-margin-bottom: 20px;
+    font-family: 'Press Start 2P';
+    font-size: 14px;
+    color: var(--zafa-green);
+    margin-top: 0;
+    margin-bottom: 20px;
 }
 
 .mission-briefing p {
-margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .mission-briefing strong {
-color: var(–gold);
+    color: var(--gold);
 }
 
 .fuku-word {
-color: var(–fuku-red);
-cursor: pointer;
-transition: all 0.2s;
+    color: var(--fuku-red);
+    cursor: pointer;
+    transition: all 0.2s;
 }
 
 .fuku-word:hover {
-text-shadow: 0 0 10px var(–fuku-red);
-transform: translateX(-2px);
+    text-shadow: 0 0 10px var(--fuku-red);
+    transform: translateX(-2px);
 }
 
 .zafa-word {
-color: var(–zafa-green);
-cursor: pointer;
-transition: all 0.2s;
+    color: var(--zafa-green);
+    cursor: pointer;
+    transition: all 0.2s;
 }
 
 .zafa-word:hover {
-text-shadow: 0 0 10px var(–zafa-green);
+    text-shadow: 0 0 10px var(--zafa-green);
 }
 
 .enter-btn {
-background: var(–zafa-green);
-color: #000;
-border: none;
-padding: 20px 40px;
-font-family: ‘Press Start 2P’;
-font-size: 14px;
-cursor: pointer;
-margin-top: 30px;
-transition: all 0.3s;
-box-shadow: 0 4px 0 #2a9910;
+    background: var(--zafa-green);
+    color: #000;
+    border: none;
+    padding: 20px 40px;
+    font-family: 'Press Start 2P';
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 30px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 0 #2a9910;
 }
 
 .enter-btn:hover {
-background: #4fff2a;
-transform: translateY(-2px);
-box-shadow: 0 6px 0 #2a9910, 0 0 20px var(–zafa-green);
+    background: #4fff2a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 #2a9910, 0 0 20px var(--zafa-green);
 }
 
 .enter-btn:active {
-transform: translateY(2px);
-box-shadow: 0 2px 0 #2a9910;
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #2a9910;
 }
 
 /* Main Interface */
 #main-interface {
-display: none;
-max-width: 1400px;
-margin: 0 auto;
+    display: none;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 #fuku-jigsaw {
-background: var(–bg);
-border: 12px solid var(–border);
-border-radius: 4px;
-padding: 30px;
-box-shadow: 0 0 60px rgba(0, 0, 0, 1);
-position: relative;
-transition: border-color 0.5s ease;
+    background: var(--bg);
+    border: 12px solid var(--border);
+    border-radius: 4px;
+    padding: 30px;
+    box-shadow: 0 0 60px rgba(0, 0, 0, 1);
+    position: relative;
 }
 
-/* Level-specific color schemes */
-#fuku-jigsaw.level-1 { border-color: #8B0000; } /* 1492: Dark blood red */
-#fuku-jigsaw.level-2 { border-color: #4B0082; } /* 1930: Deep purple */
-#fuku-jigsaw.level-3 { border-color: #2F4F4F; } /* 1937: Dark slate */
-#fuku-jigsaw.level-4 { border-color: #FFD700; } /* 1960: Gold (butterflies) */
-#fuku-jigsaw.level-5 { border-color: #1C1C1C; } /* 1965: Almost black */
-
 .header-block {
-text-align: center;
-border-bottom: 2px solid #333;
-padding-bottom: 30px;
-margin-bottom: 30px;
-position: relative;
+    text-align: center;
+    border-bottom: 2px solid #333;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+    position: relative;
 }
 
 .header-title {
-font-family: ‘Press Start 2P’;
-color: var(–fuku-red);
-font-size: 18px;
-letter-spacing: 2px;
-line-height: 1.6;
+    font-family: 'Press Start 2P';
+    color: var(--fuku-red);
+    font-size: 18px;
+    letter-spacing: 2px;
+    line-height: 1.6;
 }
 
 .sound-toggle {
-position: absolute;
-top: 0;
-right: 0;
-background: none;
-border: 1px solid #444;
-color: var(–muted);
-padding: 8px 12px;
-cursor: pointer;
-font-family: ‘Press Start 2P’;
-font-size: 10px;
-transition: all 0.2s;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: none;
+    border: 1px solid #444;
+    color: var(--muted);
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: 'Press Start 2P';
+    font-size: 10px;
+    transition: all 0.2s;
 }
 
 .sound-toggle:hover {
-color: var(–mana-blue);
-border-color: var(–mana-blue);
+    color: var(--mana-blue);
+    border-color: var(--mana-blue);
 }
 
 .sound-toggle.active {
-color: var(–zafa-green);
-border-color: var(–zafa-green);
+    color: var(--zafa-green);
+    border-color: var(--zafa-green);
 }
 
 .nav-rack {
-display: grid;
-grid-template-columns: repeat(5, 1fr);
-gap: 12px;
-margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
 }
 
 .nav-btn {
-background: #000;
-border: 1px solid #444;
-color: #666;
-font-family: ‘Press Start 2P’;
-font-size: 9px;
-padding: 18px 5px;
-cursor: pointer;
-transition: all 0.2s;
-line-height: 1.4;
-opacity: 0;
-animation: fadeInBtn 0.5s ease-out forwards;
+    background: #000;
+    border: 1px solid #444;
+    color: #666;
+    font-family: 'Press Start 2P';
+    font-size: 9px;
+    padding: 18px 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+    line-height: 1.4;
+    opacity: 0;
+    animation: fadeInBtn 0.5s ease-out forwards;
 }
 
 .nav-btn:nth-child(1) { animation-delay: 0.1s; }
@@ -275,429 +242,423 @@ animation: fadeInBtn 0.5s ease-out forwards;
 .nav-btn:nth-child(5) { animation-delay: 0.5s; }
 
 @keyframes fadeInBtn {
-to { opacity: 1; }
+    to { opacity: 1; }
 }
 
-.nav-btn:hover {
-color: var(–mana-blue);
-border-color: var(–mana-blue);
+.nav-btn:hover { 
+    color: var(--mana-blue); 
+    border-color: var(--mana-blue); 
 }
 
 .nav-btn.active {
-background: #111;
-color: var(–zafa-green);
-border-color: var(–zafa-green);
-box-shadow: 0 0 15px rgba(57, 255, 20, 0.3);
-animation: pulse 2s infinite;
+    background: #111;
+    color: var(--zafa-green);
+    border-color: var(--zafa-green);
+    box-shadow: 0 0 15px rgba(57, 255, 20, 0.3);
+    animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
-0%, 100% { box-shadow: 0 0 15px rgba(57, 255, 20, 0.3); }
-50% { box-shadow: 0 0 25px rgba(57, 255, 20, 0.6); }
+    0%, 100% { box-shadow: 0 0 15px rgba(57, 255, 20, 0.3); }
+    50% { box-shadow: 0 0 25px rgba(57, 255, 20, 0.6); }
 }
 
 .progress-dots {
-text-align: center;
-margin-bottom: 20px;
-font-size: 20px;
-letter-spacing: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 20px;
+    letter-spacing: 10px;
 }
 
 .progress-dots span {
-color: #333;
-transition: all 0.3s;
+    color: #333;
+    transition: all 0.3s;
 }
 
 .progress-dots span.visited {
-color: var(–zafa-green);
-text-shadow: 0 0 5px var(–zafa-green);
+    color: var(--zafa-green);
+    text-shadow: 0 0 5px var(--zafa-green);
 }
 
 .main-terminal {
-background: #000810;
-border: 1px solid #1a1a1a;
-padding: 40px;
-min-height: 700px;
-max-height: 800px;
-overflow-y: auto;
-line-height: 1.9;
-font-size: 18px;
-scrollbar-width: thin;
-scrollbar-color: var(–zafa-green) #000;
-scroll-behavior: smooth;
-position: relative;
+    background: #000810;
+    border: 1px solid #1a1a1a;
+    padding: 40px;
+    min-height: 700px;
+    max-height: 800px;
+    overflow-y: auto;
+    line-height: 1.9;
+    font-size: 18px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--zafa-green) #000;
+    scroll-behavior: smooth;
+    position: relative;
 }
 
 .terminal-transition {
-animation: staticGlitch 0.5s;
+    animation: staticGlitch 0.5s;
 }
 
 @keyframes staticGlitch {
-0%, 100% { opacity: 1; }
-25% { opacity: 0.3; transform: translateX(-5px); }
-50% { opacity: 0.7; transform: translateX(5px); }
-75% { opacity: 0.4; transform: translateX(-3px); }
+    0%, 100% { opacity: 1; }
+    25% { opacity: 0.3; transform: translateX(-5px); }
+    50% { opacity: 0.7; transform: translateX(5px); }
+    75% { opacity: 0.4; transform: translateX(-3px); }
 }
 
 .lore-tag {
-font-family: ‘Press Start 2P’;
-font-size: 11px;
-color: var(–gold);
-display: block;
-margin-bottom: 20px;
-letter-spacing: 1px;
+    font-family: 'Press Start 2P';
+    font-size: 11px;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
 }
 
 .intel-strip {
-border-left: 4px solid var(–fuku-red);
-background: rgba(255, 49, 49, 0.05);
-padding: 25px;
-margin: 30px 0;
-font-style: italic;
-font-size: 17px;
+    border-left: 4px solid var(--fuku-red);
+    background: rgba(255, 49, 49, 0.05);
+    padding: 25px;
+    margin: 30px 0;
+    font-style: italic;
+    font-size: 17px;
 }
 
 .zafa-protocol-box {
-border: 2px solid var(–zafa-green);
-background: rgba(57, 255, 20, 0.03);
-padding: 35px;
-margin-top: 50px;
+    border: 2px solid var(--zafa-green);
+    background: rgba(57, 255, 20, 0.03);
+    padding: 35px;
+    margin-top: 50px;
 }
 
 .zafa-protocol-box h3 {
-font-family: ‘Press Start 2P’;
-font-size: 12px;
-color: var(–zafa-green);
-margin-top: 0;
-text-transform: uppercase;
-line-height: 1.6;
+    font-family: 'Press Start 2P';
+    font-size: 12px;
+    color: var(--zafa-green);
+    margin-top: 0;
+    text-transform: uppercase;
+    line-height: 1.6;
 }
 
 .zafa-protocol-box ul {
-list-style-type: square;
-padding-left: 20px;
+    list-style-type: square;
+    padding-left: 20px;
 }
 
 .zafa-protocol-box li {
-margin-bottom: 15px;
+    margin-bottom: 15px;
 }
 
-.archival-link {
-color: var(–mana-blue);
-text-decoration: none;
-border-bottom: 1px dotted var(–mana-blue);
-transition: all 0.2s;
+.archival-link { 
+    color: var(--mana-blue); 
+    text-decoration: none; 
+    border-bottom: 1px dotted var(--mana-blue);
+    transition: all 0.2s;
 }
 
-.archival-link:hover {
-background: var(–mana-blue);
-color: #000;
-padding: 2px 4px;
+.archival-link:hover { 
+    background: var(--mana-blue); 
+    color: #000; 
+    padding: 2px 4px;
 }
 
 .footnote-section {
-margin-top: 60px;
-border-top: 1px solid #333;
-padding-top: 30px;
-font-size: 15px;
-color: #aaa;
-line-height: 1.7;
+    margin-top: 60px;
+    border-top: 1px solid #333;
+    padding-top: 30px;
+    font-size: 15px;
+    color: #aaa;
+    line-height: 1.7;
 }
 
-.fn-num {
-color: var(–zafa-green);
-font-family: ‘Press Start 2P’;
-font-size: 8px;
-vertical-align: super;
-text-decoration: none;
-cursor: pointer;
-transition: all 0.2s;
+.fn-num { 
+    color: var(--zafa-green); 
+    font-family: 'Press Start 2P'; 
+    font-size: 8px; 
+    vertical-align: super; 
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
 }
 
-.fn-num:hover {
-color: #fff;
-text-shadow: 0 0 5px var(–zafa-green);
+.fn-num:hover { 
+    color: #fff;
+    text-shadow: 0 0 5px var(--zafa-green);
 }
 
-.fn-anchor {
-color: var(–zafa-green);
-font-weight: bold;
-margin-right: 10px;
+.fn-anchor { 
+    color: var(--zafa-green); 
+    font-weight: bold; 
+    margin-right: 10px; 
 }
 
 .source-index {
-margin-top: 50px;
-font-size: 14px;
-color: var(–muted);
-border-top: 1px dashed #333;
-padding-top: 25px;
-line-height: 1.6;
+    margin-top: 50px;
+    font-size: 14px;
+    color: var(--muted);
+    border-top: 1px dashed #333;
+    padding-top: 25px;
+    line-height: 1.6;
 }
 
 .source-index em {
-color: var(–text);
+    color: var(--text);
 }
 
 /* Easter Eggs */
 .virus-word {
-cursor: pointer;
-transition: all 0.2s;
+    cursor: pointer;
+    transition: all 0.2s;
 }
 
 .virus-word:hover {
-color: var(–fuku-red);
-animation: virusFlash 0.3s;
+    color: var(--fuku-red);
+    animation: virusFlash 0.3s;
 }
 
 @keyframes virusFlash {
-0%, 100% { opacity: 1; }
-50% { opacity: 0.3; color: var(–fuku-red); }
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; color: var(--fuku-red); }
 }
 
 .eye-word {
-cursor: pointer;
-position: relative;
+    cursor: pointer;
+    position: relative;
 }
 
 .eye-word:hover::after {
-content: ‘👁’;
-position: absolute;
-left: 50%;
-top: -20px;
-transform: translateX(-50%);
-font-size: 16px;
+    content: '👁';
+    position: absolute;
+    left: 50%;
+    top: -20px;
+    transform: translateX(-50%);
+    font-size: 16px;
 }
 
 .perejil-word {
-cursor: pointer;
+    cursor: pointer;
 }
 
 .perejil-word:hover {
-animation: shake 0.3s;
+    animation: shake 0.3s;
 }
 
 @keyframes shake {
-0%, 100% { transform: translateX(0); }
-25% { transform: translateX(-2px); }
-75% { transform: translateX(2px); }
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    75% { transform: translateX(2px); }
 }
 
 .mariposas-word {
-cursor: pointer;
-position: relative;
+    cursor: pointer;
+    position: relative;
 }
 
 .mariposas-word:hover::after {
-content: ‘🦋’;
-position: absolute;
-left: 100%;
-top: -5px;
-margin-left: 5px;
-font-size: 14px;
+    content: '🦋';
+    position: absolute;
+    left: 100%;
+    top: -5px;
+    margin-left: 5px;
+    font-size: 14px;
 }
 
 /* Research Log */
 .research-log {
-position: fixed;
-bottom: 0;
-left: 0;
-right: 0;
-background: rgba(0, 8, 16, 0.98);
-border-top: 2px solid var(–zafa-green);
-max-height: 0;
-overflow: hidden;
-transition: max-height 0.3s ease;
-z-index: 1000;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 8, 16, 0.98);
+    border-top: 2px solid var(--zafa-green);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    z-index: 1000;
 }
 
 .research-log.open {
-max-height: 400px;
+    max-height: 400px;
 }
 
 .log-header {
-padding: 15px 20px;
-background: #000;
-border-bottom: 1px solid #333;
-display: flex;
-justify-content: space-between;
-align-items: center;
+    padding: 15px 20px;
+    background: #000;
+    border-bottom: 1px solid #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .log-title {
-font-family: ‘Press Start 2P’;
-font-size: 10px;
-color: var(–zafa-green);
+    font-family: 'Press Start 2P';
+    font-size: 10px;
+    color: var(--zafa-green);
 }
 
 .log-toggle {
-background: none;
-border: 1px solid var(–zafa-green);
-color: var(–zafa-green);
-padding: 8px 15px;
-font-family: ‘Press Start 2P’;
-font-size: 8px;
-cursor: pointer;
-transition: all 0.2s;
+    background: none;
+    border: 1px solid var(--zafa-green);
+    color: var(--zafa-green);
+    padding: 8px 15px;
+    font-family: 'Press Start 2P';
+    font-size: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
 }
 
 .log-toggle:hover {
-background: var(–zafa-green);
-color: #000;
+    background: var(--zafa-green);
+    color: #000;
 }
 
 .log-tabs {
-display: flex;
-gap: 5px;
-padding: 10px 20px;
-background: #000;
-overflow-x: auto;
+    display: flex;
+    gap: 5px;
+    padding: 10px 20px;
+    background: #000;
+    overflow-x: auto;
 }
 
 .log-tab {
-background: #111;
-border: 1px solid #333;
-color: #666;
-padding: 8px 12px;
-font-family: ‘Press Start 2P’;
-font-size: 8px;
-cursor: pointer;
-white-space: nowrap;
-transition: all 0.2s;
+    background: #111;
+    border: 1px solid #333;
+    color: #666;
+    padding: 8px 12px;
+    font-family: 'Press Start 2P';
+    font-size: 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
 }
 
 .log-tab:hover {
-color: var(–mana-blue);
-border-color: var(–mana-blue);
+    color: var(--mana-blue);
+    border-color: var(--mana-blue);
 }
 
 .log-tab.active {
-color: var(–zafa-green);
-border-color: var(–zafa-green);
-background: #0a0a0a;
+    color: var(--zafa-green);
+    border-color: var(--zafa-green);
+    background: #0a0a0a;
 }
 
 .log-content {
-padding: 20px;
+    padding: 20px;
 }
 
 .log-textarea {
-width: 100%;
-height: 200px;
-background: #000;
-border: 1px solid #333;
-color: var(–text);
-font-family: ‘Share Tech Mono’, monospace;
-font-size: 14px;
-padding: 10px;
-resize: vertical;
-display: none;
+    width: 100%;
+    height: 200px;
+    background: #000;
+    border: 1px solid #333;
+    color: var(--text);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 14px;
+    padding: 10px;
+    resize: vertical;
+    display: none;
 }
 
 .log-textarea.active {
-display: block;
+    display: block;
 }
 
 .log-actions {
-display: flex;
-gap: 10px;
-margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
 }
 
 .log-btn {
-background: #000;
-border: 1px solid #444;
-color: var(–muted);
-padding: 8px 15px;
-font-family: ‘Press Start 2P’;
-font-size: 8px;
-cursor: pointer;
-transition: all 0.2s;
+    background: #000;
+    border: 1px solid #444;
+    color: var(--muted);
+    padding: 8px 15px;
+    font-family: 'Press Start 2P';
+    font-size: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
 }
 
 .log-btn:hover {
-color: var(–zafa-green);
-border-color: var(–zafa-green);
+    color: var(--zafa-green);
+    border-color: var(--zafa-green);
 }
 
 .log-btn.danger:hover {
-color: var(–fuku-red);
-border-color: var(–fuku-red);
+    color: var(--fuku-red);
+    border-color: var(--fuku-red);
 }
 
 .open-log-btn {
-position: fixed;
-bottom: 20px;
-right: 20px;
-background: var(–zafa-green);
-color: #000;
-border: none;
-padding: 15px 20px;
-font-family: ‘Press Start 2P’;
-font-size: 10px;
-cursor: pointer;
-box-shadow: 0 4px 0 #2a9910;
-transition: all 0.2s;
-z-index: 999;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--zafa-green);
+    color: #000;
+    border: none;
+    padding: 15px 20px;
+    font-family: 'Press Start 2P';
+    font-size: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #2a9910;
+    transition: all 0.2s;
+    z-index: 999;
 }
 
 .open-log-btn:hover {
-transform: translateY(-2px);
-box-shadow: 0 6px 0 #2a9910, 0 0 15px var(–zafa-green);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 #2a9910, 0 0 15px var(--zafa-green);
 }
 
 .open-log-btn:active {
-transform: translateY(2px);
-box-shadow: 0 2px 0 #2a9910;
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #2a9910;
 }
 
 /* Hidden elements */
 .hidden {
-display: none;
+    display: none;
 }
 </style>
-
 </head>
 <body>
 
 <!-- Landing Page -->
-
 <div id="landing">
     <h1 class="glitch-title">HISPANIOLA QUEST:<br>THE ZAFA ARCHIVE</h1>
     <div class="system-status">[SYSTEM: NARRATIVE STREAM INITIALIZING...]</div>
-
-```
-<div class="mission-briefing">
-    <h2>MISSION BRIEFING: BEFORE YOU ENTER</h2>
     
-    <p>You're about to explore five moments in Dominican history that most history textbooks skip or sanitize. This isn't an accident. These events—the arrival of Europeans in 1492, the Trujillo dictatorship, the Parsley Massacre, the Mirabal Sisters' assassination, the 1965 U.S. invasion—are the bones underneath <em>The Brief Wondrous Life of Oscar Wao</em>. You can't understand the novel without understanding this history. You can't understand Oscar, or Beli, or Lola, or the narrator without understanding where they came from.</p>
+    <div class="mission-briefing">
+        <h2>MISSION BRIEFING: BEFORE YOU ENTER</h2>
+        
+        <p>You're about to explore five moments in Dominican history that most history textbooks skip or sanitize. This isn't an accident. These events—the arrival of Europeans in 1492, the Trujillo dictatorship, the Parsley Massacre, the Mirabal Sisters' assassination, the 1965 U.S. invasion—are the bones underneath <em>The Brief Wondrous Life of Oscar Wao</em>. You can't understand the novel without understanding this history. You can't understand Oscar, or Beli, or Lola, or the narrator without understanding where they came from.</p>
+        
+        <p><strong>The Structure:</strong><br>
+        This is a jigsaw activity. Each of you will become an expert on one historical moment. You'll explore primary sources, read archival materials, and then teach the rest of the class what you learned. Your mission is to make your assigned moment REAL—not just dates and names, but actual human stakes.</p>
+        
+        <p><strong>The Cosmology:</strong><br>
+        The novel operates on a system of curses and counterspells. The <span class="fuku-word">fukú americanus</span> is the curse, the weight of colonial history that crushes people across generations. The <span class="zafa-word">zafa</span> is the counterspell, the resistance, the refusal to let the curse have the last word. As you research, pay attention to both forces. Where do you see the fukú operating? Where do you see people creating zafa?</p>
+        
+        <p><strong>Content Warning:</strong><br>
+        This history includes genocide, dictatorship, sexual violence, and imperial occupation. It's brutal because the events were brutal. We're not sanitizing it. If you need to step out, step out. But this is the history that shapes the present. It's not optional.</p>
+        
+        <p><strong>Your Task:</strong></p>
+        <ol>
+            <li>Explore your assigned level</li>
+            <li>Follow the research prompts</li>
+            <li>Use the Research Log to take notes</li>
+            <li>Prepare to share your findings with the class</li>
+        </ol>
+        
+        <p style="text-align: center; margin-top: 30px;">The archive is waiting. Enter when ready.</p>
+    </div>
     
-    <p><strong>The Structure:</strong><br>
-    This is a jigsaw activity. Each of you will become an expert on one historical moment. You'll explore primary sources, read archival materials, and then teach the rest of the class what you learned. Your mission is to make your assigned moment REAL—not just dates and names, but actual human stakes.</p>
-    
-    <p><strong>The Cosmology:</strong><br>
-    The novel operates on a system of curses and counterspells. The <span class="fuku-word">fukú americanus</span> is the curse, the weight of colonial history that crushes people across generations. The <span class="zafa-word">zafa</span> is the counterspell, the resistance, the refusal to let the curse have the last word. As you research, pay attention to both forces. Where do you see the fukú operating? Where do you see people creating zafa?</p>
-    
-    <p><strong>Content Warning:</strong><br>
-    This history includes genocide, dictatorship, sexual violence, and imperial occupation. It's brutal because the events were brutal. We're not sanitizing it. If you need to step out, step out. But this is the history that shapes the present. It's not optional.</p>
-    
-    <p><strong>Your Task:</strong></p>
-    <ol>
-        <li>Explore your assigned level</li>
-        <li>Follow the research prompts</li>
-        <li>Use the Research Log to take notes</li>
-        <li>Prepare to share your findings with the class</li>
-    </ol>
-    
-    <p style="text-align: center; margin-top: 30px;">The archive is waiting. Enter when ready.</p>
-</div>
-
-<button class="enter-btn" onclick="enterArchive()">ENTER ARCHIVE</button>
-```
-
+    <button class="enter-btn" onclick="enterArchive()">ENTER ARCHIVE</button>
 </div>
 
 <!-- Main Interface -->
-
 <div id="main-interface">
     <div id="fuku-jigsaw">
         <div class="header-block">
@@ -705,36 +666,32 @@ display: none;
             <button class="sound-toggle" onclick="toggleSound()" id="soundBtn">🔇 SOUND: OFF</button>
         </div>
 
-```
-    <div class="progress-dots" id="progressDots">
-        <span data-level="1">○</span>
-        <span data-level="2">○</span>
-        <span data-level="3">○</span>
-        <span data-level="4">○</span>
-        <span data-level="5">○</span>
+        <div class="progress-dots" id="progressDots">
+            <span data-level="1">○</span>
+            <span data-level="2">○</span>
+            <span data-level="3">○</span>
+            <span data-level="4">○</span>
+            <span data-level="5">○</span>
+        </div>
+
+        <nav class="nav-rack">
+            <button class="nav-btn active" data-target="1">Lvl 0: 1492</button>
+            <button class="nav-btn" data-target="2">Lvl 1: 1930</button>
+            <button class="nav-btn" data-target="3">Lvl 2: 1937</button>
+            <button class="nav-btn" data-target="4">Lvl 3: 1960</button>
+            <button class="nav-btn" data-target="5">Lvl 4: 1965</button>
+        </nav>
+
+        <div class="main-terminal" id="display"></div>
+
+        <div class="source-index">
+            <strong>SOURCE INDEX:</strong><br>
+            Narrative analysis and quotations derive from Junot Díaz, <em>The Brief Wondrous Life of Oscar Wao</em> (Riverhead Books, 2007). Linked archives serve as primary-source counterpoints and research entry points.
+        </div>
     </div>
-
-    <nav class="nav-rack">
-        <button class="nav-btn active" data-target="1">Lvl 0: 1492</button>
-        <button class="nav-btn" data-target="2">Lvl 1: 1930</button>
-        <button class="nav-btn" data-target="3">Lvl 2: 1937</button>
-        <button class="nav-btn" data-target="4">Lvl 3: 1960</button>
-        <button class="nav-btn" data-target="5">Lvl 4: 1965</button>
-    </nav>
-
-    <div class="main-terminal" id="display"></div>
-
-    <div class="source-index">
-        <strong>SOURCE INDEX:</strong><br>
-        Narrative analysis and quotations derive from Junot Díaz, <em>The Brief Wondrous Life of Oscar Wao</em> (Riverhead Books, 2007). Linked archives serve as primary-source counterpoints and research entry points.
-    </div>
-</div>
-```
-
 </div>
 
 <!-- Research Log -->
-
 <div class="research-log" id="researchLog">
     <div class="log-header">
         <div class="log-title">RESEARCH LOG</div>
@@ -765,65 +722,33 @@ display: none;
 <script>
 // Audio context
 let soundEnabled = false;
-let ambientOscillator = null;
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+const beep = new AudioContext();
 
 function playBeep() {
     if (!soundEnabled) return;
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
+    const osc = beep.createOscillator();
+    const gain = beep.createGain();
     osc.connect(gain);
-    gain.connect(audioCtx.destination);
+    gain.connect(beep.destination);
     osc.frequency.value = 800;
     gain.gain.value = 0.1;
     osc.start();
-    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-    osc.stop(audioCtx.currentTime + 0.1);
+    gain.gain.exponentialRampToValueAtTime(0.01, beep.currentTime + 0.1);
+    osc.stop(beep.currentTime + 0.1);
 }
 
 function playUnlock() {
     if (!soundEnabled) return;
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
+    const osc = beep.createOscillator();
+    const gain = beep.createGain();
     osc.connect(gain);
-    gain.connect(audioCtx.destination);
+    gain.connect(beep.destination);
     osc.frequency.value = 1200;
     gain.gain.value = 0.15;
     osc.start();
-    osc.frequency.exponentialRampToValueAtTime(1600, audioCtx.currentTime + 0.15);
-    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
-    osc.stop(audioCtx.currentTime + 0.15);
-}
-
-function playTyping() {
-    if (!soundEnabled) return;
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.frequency.value = 200 + Math.random() * 100;
-    gain.gain.value = 0.05;
-    osc.start();
-    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.02);
-    osc.stop(audioCtx.currentTime + 0.02);
-}
-
-function startAmbientHum() {
-    if (!soundEnabled || ambientOscillator) return;
-    ambientOscillator = audioCtx.createOscillator();
-    const gainNode = audioCtx.createGain();
-    ambientOscillator.connect(gainNode);
-    gainNode.connect(audioCtx.destination);
-    ambientOscillator.frequency.value = 60;
-    gainNode.gain.value = 0.02;
-    ambientOscillator.start();
-}
-
-function stopAmbientHum() {
-    if (ambientOscillator) {
-        ambientOscillator.stop();
-        ambientOscillator = null;
-    }
+    osc.frequency.exponentialRampToValueAtTime(1600, beep.currentTime + 0.15);
+    gain.gain.exponentialRampToValueAtTime(0.01, beep.currentTime + 0.15);
+    osc.stop(beep.currentTime + 0.15);
 }
 
 function toggleSound() {
@@ -832,13 +757,10 @@ function toggleSound() {
     if (soundEnabled) {
         btn.textContent = '🔊 SOUND: ON';
         btn.classList.add('active');
-        audioCtx.resume();
-        startAmbientHum();
         playBeep();
     } else {
         btn.textContent = '🔇 SOUND: OFF';
         btn.classList.remove('active');
-        stopAmbientHum();
     }
 }
 
@@ -872,7 +794,7 @@ const database = {
     `,
     "2": `
         <span class="lore-tag">FILE: EL JEFE | TIMESTAMP: 1930-1961</span>
-        <p>Rafael Trujillo spent 31 years ruling the DR like a God-Emperor who'd successfully hacked the simulation. He didn't just run the country; he <em>owned</em> it—the buildings, the mountains, the capital city itself, even the air you breathed. His power sat on the <strong>SIM</strong><a href="#fn2-3" class="fn-num">3</a> (Military Intelligence Service)—his personal <span class="eye-word">Nazgûl</span>—who patrolled the streets in black Volkswagens,<a href="#fn2-4" class="fn-num">4</a> turning the whole island into a national panopticon where everyone watched themselves because they knew the Eye was always watching them.</p>
+        <p>Rafael Trujillo spent 31 years ruling the DR like a God-Emperor who'd successfully hacked the simulation. He didn't just run the country; he <em>owned</em> it—the buildings, the mountains, the capital city itself, even the goddamn air you breathed. His power sat on the <strong>SIM</strong><a href="#fn2-3" class="fn-num">3</a> (Military Intelligence Service)—his personal <span class="eye-word">Nazgûl</span>—who patrolled the streets in black Volkswagens,<a href="#fn2-4" class="fn-num">4</a> turning the whole island into a national panopticon where everyone watched themselves because they knew the Eye was always watching them.</p>
 
         <p>This is the atmosphere Beli grew up in. Trujillo was more than a dictator. He was a physical manifestation of the <em>fukú</em>, a force so absolute he could delete your family history with a glance, make you disappear so completely your own mother wouldn't dare speak your name in public. The regime reached into bedrooms, classrooms, even your thoughts. Husbands informed on wives. Children reported parents. The paranoia was systemic, architectural, total.</p>
 
@@ -900,11 +822,11 @@ const database = {
     `,
     "3": `
         <span class="lore-tag">FILE: EL CORTE | TIMESTAMP: 1937</span>
-        <p>In 1937, Trujillo turned a dictionary into a weapon. During what became known as <strong>The Parsley Massacre</strong> (or <em>El Corte</em> [The Cutting]), he ordered Dominican soldiers to use the Spanish word <strong><em><span class="perejil-word">perejil</span></em></strong> (parsley) as a shibboleth.<a href="#fn3-5" class="fn-num">5</a> If you couldn't roll the 'R' properly—if your Kreyòl accent gave you away as Haitian—the machetes came out. Estimates range from 14,000 to 20,000 dead, though some historians put the number as high as 30,000 or more. Most were killed along the Dominican-Haitian border in a campaign meticulously designed to look like spontaneous peasant violence while the state pulled every string from the shadows.</p>
+        <p>In 1937, Trujillo turned a dictionary into a weapon. During what became known as <strong>The Parsley Massacre</strong> (or <em>El Corte</em> [The Cutting]), he ordered Dominican soldiers to use the Spanish word <strong><em><span class="perejil-word">perejil</span></em></strong> (parsley) as a shibboleth.<a href="#fn3-5" class="fn-num">5</a> If you couldn't roll the 'R' properly—if your Kreyòl accent gave you away as Haitian—the machetes came out. Estimates range from 17,000 to 75,000 dead, most of them killed along the Dominican-Haitian border in a campaign meticulously designed to look like spontaneous peasant violence while the state pulled every string from the shadows.</p>
 
         <p>The geography mattered. Trujillo wanted to "whiten" the Dominican Republic, saw Haitian migration as racial contamination, an existential threat to Dominican identity (never mind that the border had always been porous, that families straddled both sides, that the distinction itself was a colonial invention). The massacre wasn't border enforcement—it was ethnic cleansing dressed up in nationalist rhetoric. He read American eugenics texts, borrowed from Jim Crow segregation, and applied it with a machete.<a href="#fn3-6" class="fn-num">6</a></p>
 
-        <p>The coverup was almost as brutal as the massacre itself. After international pressure, Trujillo agreed to pay reparations. The initial demand was $750,000, but the Dominican government actually paid Haiti $525,000—roughly $30 per victim at the low estimate, $10 at the high. Due to corruption in the Haitian bureaucracy, survivors received an average of 2 cents each. The international community nodded, filed the paperwork, and moved on. The dead stayed dead. The trauma stayed alive.</p>
+        <p>The coverup was almost as brutal as the massacre itself. Trujillo paid Haiti's government $750,000 in "reparations"—roughly $29 per person at the low estimate, $10 at the high. The international community nodded, filed the paperwork, and moved on. The dead stayed dead. The trauma stayed alive.</p>
 
         <p>The massacre left a scar across the island that's never healed. It proved that in Hispaniola, language isn't just communication—it's a survival test. The novel's mixed language—blending English, Spanish, Spanglish, and nerd-speak—is a massive counterspell, a Zafa against linguistic purity. The mix survives where purity kills.</p>
 
@@ -931,15 +853,15 @@ const database = {
         <span class="lore-tag">FILE: LAS MARIPOSAS | TIMESTAMP: 1960</span>
         <p>Every tyrant eventually triggers a Boss Battle he can't win. For Trujillo, it was <strong>The Mirabal Sisters</strong>. Code-named <em><span class="mariposas-word">Las Mariposas</span></em> (The Butterflies) in the underground resistance, Patria, Minerva, and María Teresa became the moral and intellectual heart of the anti-Trujillo movement. They weren't just symbols, either. They were organizers, smugglers, strategists. They hid revolutionaries in their homes, transported weapons, coordinated between resistance cells across the country.</p>
 
-        <p><strong>Minerva</strong> was the spark—brilliant, fearless, publicly defiant in ways that should have gotten her killed years earlier. She graduated from law school (some sources say summa cum laude), but Trujillo personally blocked her from receiving her license to practice law. The regime's petty cruelty backfired: it gave her more time to organize, to recruit, to build the resistance network that would eventually end him.</p>
+        <p><strong>Minerva</strong> was the spark—brilliant, fearless, publicly defiant in ways that should have gotten her killed years earlier. She earned her law degree (Trujillo personally blocked her from practicing law out of pure spite), slapped him at a party when he tried to grope her, and walked out alive because even he couldn't kill someone that publicly without consequences. That slap echoed for years. It proved he was vincible.</p>
 
-        <p><strong>Patria</strong> was the devout one, the least political of the three, until she witnessed government forces massacre civilians during a raid. Her faith didn't disappear—it transformed. She started hiding resistance fighters in her home, turned her house into a weapons cache, weaponized her respectability.</p>
+        <p><strong>Patria</strong> was the devout one, the least political of the three, until she witnessed government forces massacre civilians during a raid on a religious retreat. Her faith didn't disappear—it transformed. She started hiding resistance fighters in her home, turned her house into a weapons cache, weaponized her respectability.</p>
 
         <p><strong>María Teresa</strong> was the youngest, the romantic, the one who got radicalized through love (she married a revolutionary) and stayed radicalized through conviction. She kept a diary documenting everything—the meetings, the plans, the arrests, the torture. That diary survived. She didn't.</p>
 
         <p>Their murder on November 25, 1960, was meant to silence them. Trujillo's men beat them with clubs, strangled them, then placed their bodies back in their Jeep and pushed it off a mountain road to fake an accident. Nobody believed it. The brutality was too obvious, too excessive. The regime's invincibility cracked. Six months later, Trujillo himself was dead, ambushed and shot on a highway outside the capital. Cause and effect.</p>
 
-        <p>Notice how the novel treats the Butterflies with near-total unironic reverence. In a narrative soaked in irony and pop-culture references, the Sisters stand alone as sacred. They're the ultimate <em>zafa</em><a href="#fn4-7" class="fn-num">7</a>—the only light in a family history full of shadows. They prove that even a high-level <em>fukú</em> has an expiration date when it collides with unstoppable force.</p>
+        <p>Notice how the novel treats the Butterflies with near-total unironic reverence. In a narrative soaked in irony and pop-culture references, the Sisters stand alone as sacred. They're the ultimate <em>zafa</em><a href="#fn4-7" class="fn-num">7</a>—the only light in a family history full of shadows. They prove that even a high-level <em>fukú</em> has an expiration date when it hits a force of nature like Minerva Mirabal.<a href="#fn4-8" class="fn-num">8</a></p>
 
         <div class="intel-strip">
             "One of the main reasons why the women from Salcedo have reputations for being so incredibly fierce, don't take shit from nobody, not even a Trujillo" (Díaz 83).
@@ -956,6 +878,7 @@ const database = {
 
         <div class="footnote-section">
             <div id="fn4-7"><span class="fn-anchor">7.</span> Zafa: The counter-spell. The word you say when history starts getting too heavy, when the <em>fukú</em> is closing in. The Sisters are the historical Zafa for the entire Dominican Republic—proof that resistance isn't futile, that courage compounds, that tyranny has an off switch if you're willing to pay the price to flip it.</div>
+            <div id="fn4-8"><span class="fn-anchor">8.</span> Minerva Mirabal earned her law degree in 1952, top of her class. Trujillo blocked her from receiving her license to practice because she'd refused his advances, because she'd embarrassed him, because he could. It was a petty, vindictive move that perfectly encapsulates his pathology. But here's the thing: he kept her alive for eight more years, which gave her eight more years to organize, to recruit, to build the resistance network that would eventually end him. The spite backfired. The fukú ate its own tail.</div>
         </div>
     `,
     "5": `
@@ -1005,37 +928,19 @@ function enterArchive() {
 // Update display
 function updateDisplay(id) {
     const display = document.getElementById('display');
-    const container = document.getElementById('fuku-jigsaw');
     
     // Play sound if switching levels
     if (id !== currentLevel) {
         playBeep();
     }
     
-    // Update border color
-    container.className = '';
-    container.id = 'fuku-jigsaw';
-    container.classList.add('level-' + id);
-    
     // Add transition effect
     display.classList.add('terminal-transition');
     
-    // Typing effect
-    let typingInterval;
     setTimeout(() => {
         display.innerHTML = database[id];
         display.scrollTop = 0;
         display.classList.remove('terminal-transition');
-        
-        // Play typing sounds during transition
-        if (soundEnabled) {
-            let count = 0;
-            typingInterval = setInterval(() => {
-                playTyping();
-                count++;
-                if (count > 15) clearInterval(typingInterval);
-            }, 30);
-        }
         
         // Mark as visited
         if (!visitedLevels.has(id)) {
