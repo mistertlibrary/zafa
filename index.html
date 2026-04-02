@@ -48,6 +48,30 @@ body::before {
     opacity: 0.3;
 }
 
+/* Print Stylesheet */
+@media print {
+    body::before { display: none; }
+    body { background: white; color: black; padding: 0; }
+    #landing, .sound-toggle, .open-log-btn, .research-log, .nav-rack, .progress-dots { display: none !important; }
+    #main-interface { display: block !important; }
+    #fuku-jigsaw { border: none; box-shadow: none; background: white; }
+    .main-terminal { 
+        height: auto; 
+        max-height: none; 
+        overflow: visible;
+        background: white;
+        border: none;
+        page-break-inside: avoid;
+    }
+    .header-title { color: black; }
+    .lore-tag, .fn-num, .fn-anchor { color: black; }
+    .intel-strip { border-left-color: black; background: #f5f5f5; }
+    .zafa-protocol-box { border-color: black; background: #f5f5f5; }
+    .archival-link { color: black; border-bottom: 1px solid black; }
+    .source-index { color: black; }
+    a[href]:after { content: " (" attr(href) ")"; font-size: 0.8em; }
+}
+
 /* Landing Page */
 #landing {
     min-height: 100vh;
@@ -172,7 +196,15 @@ body::before {
     padding: 30px;
     box-shadow: 0 0 60px rgba(0, 0, 0, 1);
     position: relative;
+    transition: border-color 0.5s ease;
 }
+
+/* Level-specific color schemes */
+#fuku-jigsaw.level-1 { border-color: #8B0000; } /* 1492: Dark blood red */
+#fuku-jigsaw.level-2 { border-color: #4B0082; } /* 1930: Deep purple */
+#fuku-jigsaw.level-3 { border-color: #2F4F4F; } /* 1937: Dark slate */
+#fuku-jigsaw.level-4 { border-color: #FFD700; } /* 1960: Gold (butterflies) */
+#fuku-jigsaw.level-5 { border-color: #1C1C1C; } /* 1965: Almost black */
 
 .header-block {
     text-align: center;
@@ -722,33 +754,65 @@ body::before {
 <script>
 // Audio context
 let soundEnabled = false;
-const beep = new AudioContext();
+let ambientOscillator = null;
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
 function playBeep() {
     if (!soundEnabled) return;
-    const osc = beep.createOscillator();
-    const gain = beep.createGain();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
     osc.connect(gain);
-    gain.connect(beep.destination);
+    gain.connect(audioCtx.destination);
     osc.frequency.value = 800;
     gain.gain.value = 0.1;
     osc.start();
-    gain.gain.exponentialRampToValueAtTime(0.01, beep.currentTime + 0.1);
-    osc.stop(beep.currentTime + 0.1);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+    osc.stop(audioCtx.currentTime + 0.1);
 }
 
 function playUnlock() {
     if (!soundEnabled) return;
-    const osc = beep.createOscillator();
-    const gain = beep.createGain();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
     osc.connect(gain);
-    gain.connect(beep.destination);
+    gain.connect(audioCtx.destination);
     osc.frequency.value = 1200;
     gain.gain.value = 0.15;
     osc.start();
-    osc.frequency.exponentialRampToValueAtTime(1600, beep.currentTime + 0.15);
-    gain.gain.exponentialRampToValueAtTime(0.01, beep.currentTime + 0.15);
-    osc.stop(beep.currentTime + 0.15);
+    osc.frequency.exponentialRampToValueAtTime(1600, audioCtx.currentTime + 0.15);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+    osc.stop(audioCtx.currentTime + 0.15);
+}
+
+function playTyping() {
+    if (!soundEnabled) return;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.frequency.value = 200 + Math.random() * 100;
+    gain.gain.value = 0.05;
+    osc.start();
+    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.02);
+    osc.stop(audioCtx.currentTime + 0.02);
+}
+
+function startAmbientHum() {
+    if (!soundEnabled || ambientOscillator) return;
+    ambientOscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    ambientOscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    ambientOscillator.frequency.value = 60;
+    gainNode.gain.value = 0.02;
+    ambientOscillator.start();
+}
+
+function stopAmbientHum() {
+    if (ambientOscillator) {
+        ambientOscillator.stop();
+        ambientOscillator = null;
+    }
 }
 
 function toggleSound() {
@@ -757,10 +821,13 @@ function toggleSound() {
     if (soundEnabled) {
         btn.textContent = '🔊 SOUND: ON';
         btn.classList.add('active');
+        audioCtx.resume();
+        startAmbientHum();
         playBeep();
     } else {
         btn.textContent = '🔇 SOUND: OFF';
         btn.classList.remove('active');
+        stopAmbientHum();
     }
 }
 
@@ -794,7 +861,7 @@ const database = {
     `,
     "2": `
         <span class="lore-tag">FILE: EL JEFE | TIMESTAMP: 1930-1961</span>
-        <p>Rafael Trujillo spent 31 years ruling the DR like a God-Emperor who'd successfully hacked the simulation. He didn't just run the country; he <em>owned</em> it—the buildings, the mountains, the capital city itself, even the goddamn air you breathed. His power sat on the <strong>SIM</strong><a href="#fn2-3" class="fn-num">3</a> (Military Intelligence Service)—his personal <span class="eye-word">Nazgûl</span>—who patrolled the streets in black Volkswagens,<a href="#fn2-4" class="fn-num">4</a> turning the whole island into a national panopticon where everyone watched themselves because they knew the Eye was always watching them.</p>
+        <p>Rafael Trujillo spent 31 years ruling the DR like a God-Emperor who'd successfully hacked the simulation. He didn't just run the country; he <em>owned</em> it—the buildings, the mountains, the capital city itself, even the air you breathed. His power sat on the <strong>SIM</strong><a href="#fn2-3" class="fn-num">3</a> (Military Intelligence Service)—his personal <span class="eye-word">Nazgûl</span>—who patrolled the streets in black Volkswagens,<a href="#fn2-4" class="fn-num">4</a> turning the whole island into a national panopticon where everyone watched themselves because they knew the Eye was always watching them.</p>
 
         <p>This is the atmosphere Beli grew up in. Trujillo was more than a dictator. He was a physical manifestation of the <em>fukú</em>, a force so absolute he could delete your family history with a glance, make you disappear so completely your own mother wouldn't dare speak your name in public. The regime reached into bedrooms, classrooms, even your thoughts. Husbands informed on wives. Children reported parents. The paranoia was systemic, architectural, total.</p>
 
@@ -822,11 +889,11 @@ const database = {
     `,
     "3": `
         <span class="lore-tag">FILE: EL CORTE | TIMESTAMP: 1937</span>
-        <p>In 1937, Trujillo turned a dictionary into a weapon. During what became known as <strong>The Parsley Massacre</strong> (or <em>El Corte</em> [The Cutting]), he ordered Dominican soldiers to use the Spanish word <strong><em><span class="perejil-word">perejil</span></em></strong> (parsley) as a shibboleth.<a href="#fn3-5" class="fn-num">5</a> If you couldn't roll the 'R' properly—if your Kreyòl accent gave you away as Haitian—the machetes came out. Estimates range from 4,000 to 20,000 dead, though some historians put the number as high as 30,000 or more, most of them killed along the Dominican-Haitian border in a campaign meticulously designed to look like spontaneous peasant violence while the state pulled every string from the shadows.</p>
+        <p>In 1937, Trujillo turned a dictionary into a weapon. During what became known as <strong>The Parsley Massacre</strong> (or <em>El Corte</em> [The Cutting]), he ordered Dominican soldiers to use the Spanish word <strong><em><span class="perejil-word">perejil</span></em></strong> (parsley) as a shibboleth.<a href="#fn3-5" class="fn-num">5</a> If you couldn't roll the 'R' properly—if your Kreyòl accent gave you away as Haitian—the machetes came out. Estimates range from 14,000 to 20,000 dead, though some historians put the number as high as 30,000 or more. Most were killed along the Dominican-Haitian border in a campaign meticulously designed to look like spontaneous peasant violence while the state pulled every string from the shadows.</p>
 
-        <p>The geography mattered. Trujillo wanted to "whiten" the Dominican Republic, saw Haitian migration as racial contamination, an existential threat to Dominican identity (never mind that the border had always been porous, that families straddled both sides, that the distinction itself was a colonial invention). The massacre was more than mere border enforcement. It was ethnic cleansing dressed up in nationalist rhetoric. He read American eugenics texts, borrowed from Jim Crow segregation, and applied it with a machete.<a href="#fn3-6" class="fn-num">6</a></p>
+        <p>The geography mattered. Trujillo wanted to "whiten" the Dominican Republic, saw Haitian migration as racial contamination, an existential threat to Dominican identity (never mind that the border had always been porous, that families straddled both sides, that the distinction itself was a colonial invention). The massacre wasn't border enforcement—it was ethnic cleansing dressed up in nationalist rhetoric. He read American eugenics texts, borrowed from Jim Crow segregation, and applied it with a machete.<a href="#fn3-6" class="fn-num">6</a></p>
 
-        <p>The coverup was almost as brutal as the massacre itself. Trujillo offered to pay Haiti's government $750,000 in "reparations"—roughly $29 per person at the low estimate, $10 at the high. The international community nodded, filed the paperwork, and moved on. The dead stayed dead. The trauma stayed alive. $525,000 were actually paid. Survivors received an average of 2 cents each.</p>
+        <p>The coverup was almost as brutal as the massacre itself. After international pressure, Trujillo agreed to pay reparations. The initial demand was $750,000, but the Dominican government actually paid Haiti $525,000—roughly $30 per victim at the low estimate, $10 at the high. Due to corruption in the Haitian bureaucracy, survivors received an average of 2 cents each. The international community nodded, filed the paperwork, and moved on. The dead stayed dead. The trauma stayed alive.</p>
 
         <p>The massacre left a scar across the island that's never healed. It proved that in Hispaniola, language isn't just communication—it's a survival test. The novel's mixed language—blending English, Spanish, Spanglish, and nerd-speak—is a massive counterspell, a Zafa against linguistic purity. The mix survives where purity kills.</p>
 
@@ -853,15 +920,15 @@ const database = {
         <span class="lore-tag">FILE: LAS MARIPOSAS | TIMESTAMP: 1960</span>
         <p>Every tyrant eventually triggers a Boss Battle he can't win. For Trujillo, it was <strong>The Mirabal Sisters</strong>. Code-named <em><span class="mariposas-word">Las Mariposas</span></em> (The Butterflies) in the underground resistance, Patria, Minerva, and María Teresa became the moral and intellectual heart of the anti-Trujillo movement. They weren't just symbols, either. They were organizers, smugglers, strategists. They hid revolutionaries in their homes, transported weapons, coordinated between resistance cells across the country.</p>
 
-        <p><strong>Minerva</strong> was the spark—brilliant, fearless, publicly defiant in ways that should have gotten her killed years earlier. She earned her law degree (Trujillo personally blocked her from practicing law out of pure spite), allegedly slapped him at a party when he tried to grope her, and walked out alive because even he couldn't kill someone that publicly without consequences. That slap, literal or metaphorical, echoed for years. Julia Alvarez's novel In the Time of the Butterflies, not verified history. Dedé Mirabal told author Julia Alvarez there was no slap, just a confrontation. It's a disputed legend. Regardless, the incident proved he was vincible.</p>
+        <p><strong>Minerva</strong> was the spark—brilliant, fearless, publicly defiant in ways that should have gotten her killed years earlier. She graduated from law school (some sources say summa cum laude), but Trujillo personally blocked her from receiving her license to practice law. The regime's petty cruelty backfired: it gave her more time to organize, to recruit, to build the resistance network that would eventually end him.</p>
 
-        <p><strong>Patria</strong> was the devout one, the least political of the three, until she witnessed government forces massacre civilians during a raid on a religious retreat. Her faith didn't disappear—it transformed. She started hiding resistance fighters in her home, turned her house into a weapons cache, weaponized her respectability.</p>
+        <p><strong>Patria</strong> was the devout one, the least political of the three, until she witnessed government forces massacre civilians during a raid. Her faith didn't disappear—it transformed. She started hiding resistance fighters in her home, turned her house into a weapons cache, weaponized her respectability.</p>
 
         <p><strong>María Teresa</strong> was the youngest, the romantic, the one who got radicalized through love (she married a revolutionary) and stayed radicalized through conviction. She kept a diary documenting everything—the meetings, the plans, the arrests, the torture. That diary survived. She didn't.</p>
 
         <p>Their murder on November 25, 1960, was meant to silence them. Trujillo's men beat them with clubs, strangled them, then placed their bodies back in their Jeep and pushed it off a mountain road to fake an accident. Nobody believed it. The brutality was too obvious, too excessive. The regime's invincibility cracked. Six months later, Trujillo himself was dead, ambushed and shot on a highway outside the capital. Cause and effect.</p>
 
-        <p>Notice how the novel treats the Butterflies with near-total unironic reverence. In a narrative soaked in irony and pop-culture references, the Sisters stand alone as sacred. They're the ultimate <em>zafa</em><a href="#fn4-7" class="fn-num">7</a>—the only light in a family history full of shadows. They prove that even a high-level <em>fukú</em> has an expiration date when it hits a force of nature like Minerva Mirabal.<a href="#fn4-8" class="fn-num">8</a></p>
+        <p>Notice how the novel treats the Butterflies with near-total unironic reverence. In a narrative soaked in irony and pop-culture references, the Sisters stand alone as sacred. They're the ultimate <em>zafa</em><a href="#fn4-7" class="fn-num">7</a>—the only light in a family history full of shadows. They prove that even a high-level <em>fukú</em> has an expiration date when it collides with unstoppable force.</p>
 
         <div class="intel-strip">
             "One of the main reasons why the women from Salcedo have reputations for being so incredibly fierce, don't take shit from nobody, not even a Trujillo" (Díaz 83).
@@ -878,7 +945,6 @@ const database = {
 
         <div class="footnote-section">
             <div id="fn4-7"><span class="fn-anchor">7.</span> Zafa: The counter-spell. The word you say when history starts getting too heavy, when the <em>fukú</em> is closing in. The Sisters are the historical Zafa for the entire Dominican Republic—proof that resistance isn't futile, that courage compounds, that tyranny has an off switch if you're willing to pay the price to flip it.</div>
-            <div id="fn4-8"><span class="fn-anchor">8.</span> Minerva Mirabal earned her law degree in 1952, top of her class. Trujillo blocked her from receiving her license to practice because she'd refused his advances, because she'd embarrassed him, because he could. It was a petty, vindictive move that perfectly encapsulates his pathology. But here's the thing: he kept her alive for eight more years, which gave her eight more years to organize, to recruit, to build the resistance network that would eventually end him. The spite backfired. The fukú ate its own tail.</div>
         </div>
     `,
     "5": `
@@ -928,19 +994,37 @@ function enterArchive() {
 // Update display
 function updateDisplay(id) {
     const display = document.getElementById('display');
+    const container = document.getElementById('fuku-jigsaw');
     
     // Play sound if switching levels
     if (id !== currentLevel) {
         playBeep();
     }
     
+    // Update border color
+    container.className = '';
+    container.id = 'fuku-jigsaw';
+    container.classList.add('level-' + id);
+    
     // Add transition effect
     display.classList.add('terminal-transition');
     
+    // Typing effect
+    let typingInterval;
     setTimeout(() => {
         display.innerHTML = database[id];
         display.scrollTop = 0;
         display.classList.remove('terminal-transition');
+        
+        // Play typing sounds during transition
+        if (soundEnabled) {
+            let count = 0;
+            typingInterval = setInterval(() => {
+                playTyping();
+                count++;
+                if (count > 15) clearInterval(typingInterval);
+            }, 30);
+        }
         
         // Mark as visited
         if (!visitedLevels.has(id)) {
